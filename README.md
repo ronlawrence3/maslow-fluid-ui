@@ -1,16 +1,48 @@
-# Tauri + Vue + TypeScript
+# Maslow CNC alternate UI
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project provides a different, more modern, user interface for the Maslow CNC machine. It is built using the Tauri framework, which allows for a single codebase to be compiled to native applications for Windows, MacOS, and Linux.
 
-## Recommended IDE Setup
+## Features
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Modern, responsive user interface
+- Cross-platform support
+- Offline support
 
-## Type Support For `.vue` Imports in TS
+## Installation
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+To install the application, see the releases page for pre-built binaries for Windows, MacOS, and Linux.
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+## Development
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+To develop the application, you will need to have Node.js and npm installed. We recommend nodenv, which allows you to manage multiple versions of Node.js on your system.
+
+Once you have a nodejs installed, you can then clone the repository and run the following commands:
+
+```bash
+npm install
+npm run tauri dev
+```
+
+This will start the development server and open the application. You can then make changes to the code and see them reflected in real-time.
+
+## Building
+
+To build the application, you can run the following command:
+
+```bash
+npm run tauri build
+```
+
+This will create a distributable package for your platform in the `dist` directory.
+
+## Contributing
+
+If you would like to contribute to the project, please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgements
+
+This project would not have been possible without the hard work of the Maslow CNC team and the open-source community. We would like to thank them for their contributions to the project.
