@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref }from "vue";
+import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
+import DebugWebsocket from "./components/DebugWebsocket.vue";
+import DebugStore from "./components/DebugStore.vue";
+import WebsocketLog from "./components/WebsocketLog.vue";
 
 const greetMsg = ref("");
 const name = ref("");
@@ -13,16 +16,11 @@ async function greet() {
 
 <template>
   <main class="container">
-    <h1>Masow CNC</h1>
-
-    <div class="row">
-    </div>
-
-    <form class="row" @submit.prevent="greet">
-      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
-      <button type="submit">Greet</button>
-    </form>
-    <p>{{ greetMsg }}</p>
+    <h1>Maslow CNC</h1>
+    <websocket-log></websocket-log>
+    Debugging, proving out comms:
+    <debug-store></debug-store>
+    <debug-websocket></debug-websocket>
   </main>
 </template>
 
