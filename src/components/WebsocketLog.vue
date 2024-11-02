@@ -5,13 +5,24 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
     setup() {
         const store = useStore();
         const text = computed(() => store.state.websocket.data.join('\n'));
+
+        watch(text, () => {
+            setTimeout(() => {
+                const textarea = document.querySelector('.scrolling-textarea textarea');
+                console.log('text changed', textarea?.scrollHeight);
+                if (textarea) {
+                    textarea.scrollTo(0, textarea.scrollHeight + 50);
+                }
+
+            }, 50)
+        });
 
         return { text };
     },

@@ -2,6 +2,7 @@ import axios from "axios";
 import { createStore } from "vuex";
 
 export interface WebsocketData {
+  textdata: string[];
   data: string[];
   ws?: WebSocket;
 }
@@ -15,21 +16,19 @@ const wsurl = "ws://maslow.lan:81";
 const store = createStore<AppState>({
   state: {
     websocket: {
+      textdata: [],
       data: [],
     },
     responseData: "",
   },
   mutations: {
     newBlob(state, addToBuffer) {
-      console.log(state, addToBuffer);
       state.websocket.data.push(...addToBuffer.split('\r\n'));
     },
     newData(state, addToBuffer) {
-      console.log(state, addToBuffer);
-      state.websocket.data.push(addToBuffer);
+      state.websocket.textdata.push(addToBuffer);
     },
     setWs(state, ws) {
-      console.log(ws, 'connected')
       state.websocket.ws = ws;
     },
     setResponseData(state, responseData) {
