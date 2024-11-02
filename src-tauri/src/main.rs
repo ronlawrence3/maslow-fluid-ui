@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    maslow_standalone_ui_lib::run()
+    maslow_fluid_ui_lib::run()
 }
