@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref }from "vue";
 import { invoke } from "@tauri-apps/api/core";
 
 const greetMsg = ref("");
@@ -7,18 +7,20 @@ const name = ref("");
 
 async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  const result = await invoke("greet", {name: name.value});
-  greetMsg.value = result;
+  greetMsg.value = await invoke("greet", { name: name.value });
 }
 </script>
 
 <template>
   <main class="container">
-    <h1>Welcome to Maslow</h1>
+    <h1>Masow CNC</h1>
+
+    <div class="row">
+    </div>
 
     <form class="row" @submit.prevent="greet">
-      <input id="greet-input" v-model="name" placeholder="Enter something..." />
-      <button type="submit">Test</button>
+      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
+      <button type="submit">Greet</button>
     </form>
     <p>{{ greetMsg }}</p>
   </main>
