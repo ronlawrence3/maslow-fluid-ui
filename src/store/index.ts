@@ -20,8 +20,6 @@ export interface AppState {
   responseData?: string;
 }
 
-const baseUrl = "http://maslow.lan";
-const wsurl = "ws://maslow.lan:81";
 const store = createStore<AppState>({
   state: {
     settings: {},
