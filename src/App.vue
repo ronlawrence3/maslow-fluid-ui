@@ -1,28 +1,27 @@
 <script setup lang="ts">
-import { ref }from "vue";
-import { invoke } from "@tauri-apps/api/core";
+import { onMounted } from "vue";
+import { useStore } from 'vuex';
 
-const greetMsg = ref("");
-const name = ref("");
+import DebugStore from "./components/DebugStore.vue";
+import WebsocketLog from "./components/WebsocketLog.vue";
+import SendCommand from "./components/SendCommand.vue";
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
+const store = useStore();
+
+onMounted(async () => {
+  console.log('onMounted')
+  await store.dispatch('loadSettings');
+  await store.dispatch('connectWebSocket');
+});
 </script>
 
 <template>
   <main class="container">
-    <h1>Masow CNC</h1>
-
-    <div class="row">
-    </div>
-
-    <form class="row" @submit.prevent="greet">
-      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
-      <button type="submit">Greet</button>
-    </form>
-    <p>{{ greetMsg }}</p>
+    <h1>Maslow CNC</h1>
+    <send-command></send-command>
+    <websocket-log></websocket-log>
+    Debugging, proving out comms:
+    <debug-store></debug-store>
   </main>
 </template>
 
@@ -34,7 +33,6 @@ async function greet() {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #249b73);
 }
-
 </style>
 <style>
 :root {
@@ -113,6 +111,7 @@ button {
 button:hover {
   border-color: #396cd8;
 }
+
 button:active {
   border-color: #396cd8;
   background-color: #e8e8e8;
@@ -142,9 +141,9 @@ button {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
+
   button:active {
     background-color: #0f0f0f69;
   }
 }
-
 </style>
