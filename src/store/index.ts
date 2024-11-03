@@ -93,6 +93,9 @@ const store = createStore<AppState>({
       store.commit("setWs", ws);
       return ws;
     },
+    async sendCommand(store, command) {
+        return await store.dispatch('fetchData', { path: 'command',params: { commandText: command, PAGEID: '' } })
+    },
     async fetchData(store, { path, params }) {
       const host =
         store.state.settings.hosts[store.state.settings.defaultHostIndex];

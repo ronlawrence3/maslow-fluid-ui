@@ -5,6 +5,7 @@ import { useStore } from 'vuex';
 import DebugStore from "./components/DebugStore.vue";
 import WebsocketLog from "./components/WebsocketLog.vue";
 import SendCommand from "./components/SendCommand.vue";
+import GcodeDisplay from "./components/GcodeDisplay.vue";
 
 const store = useStore();
 
@@ -16,16 +17,35 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="container">
+  <v-app class="container">
     <h1>Maslow CNC</h1>
-    <send-command></send-command>
-    <websocket-log></websocket-log>
-    Debugging, proving out comms:
-    <debug-store></debug-store>
-  </main>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="6">
+          <gcode-display></gcode-display>
+        </v-col>
+        <v-col cols="6">
+          <v-row>
+            <v-col cols="12">
+              <send-command ></send-command>
+            </v-col>
+            <v-col cols="12">
+              <websocket-log></websocket-log>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          Debugging, proving out comms:
+          <debug-store></debug-store>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
-<style scoped>
+<style>
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
 }
@@ -33,8 +53,12 @@ onMounted(async () => {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #249b73);
 }
-</style>
-<style>
+.send-command {
+  width: 100%;
+}
+.gcode-display {
+  height: 100%
+}
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -53,7 +77,7 @@ onMounted(async () => {
 
 .container {
   margin: 0;
-  padding-top: 10vh;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
