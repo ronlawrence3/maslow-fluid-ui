@@ -1,6 +1,6 @@
 <template>
     <div class="scrolling-textarea">
-        <textarea v-model="text" :rows="20" />
+        <v-textarea v-model="text" :rows="20" />
     </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
         const store = useStore();
         const text = computed(() => store.state.websocket.data.join('\n'));
 
+        // autoscroll
         watch(text, () => {
             setTimeout(() => {
                 const textarea = document.querySelector('.scrolling-textarea textarea');
