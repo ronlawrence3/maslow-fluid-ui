@@ -6,7 +6,7 @@ import {
     readTextFile,
 } from "@tauri-apps/plugin-fs";
 import { fetch } from "@tauri-apps/plugin-http";
-import { createStore } from "vuex";
+import { ActionContext, createStore } from "vuex";
 
 export interface WebsocketData {
   textdata: string[];
@@ -19,7 +19,6 @@ export interface AppState {
   inputValue: string;
   responseData?: string;
 }
-
 const store = createStore<AppState>({
   state: {
     settings: {},
@@ -35,7 +34,7 @@ const store = createStore<AppState>({
       state.settings = settings;
     },
     newBlob(state, addToBuffer) {
-      state.websocket.data.push(...addToBuffer.split("\r\n"));
+      state.websocket.data.push(...addToBuffer.split("\n"));
     },
     newData(state, addToBuffer) {
       state.websocket.textdata.push(addToBuffer);
@@ -93,20 +92,64 @@ const store = createStore<AppState>({
       store.commit("setWs", ws);
       return ws;
     },
-    async sendCommand(store, command) {
-        return await store.dispatch('fetchData', { path: 'command',params: { commandText: command, PAGEID: '' } })
+    async sendImmediateCommand(store, command) {
+      store.state.websocket.ws?.send(command);
     },
-    async fetchData(store, { path, params }) {
-      const host =
-        store.state.settings.hosts[store.state.settings.defaultHostIndex];
-      const response = await fetch(
-        `http://${host}/${path}?${new URLSearchParams(params).toString()}`,
-        { method: "GET" }
+    async sendCommand(store, command) {
+      store.state.websocket.ws?.send(command + "\n");
+    },
+    async sendCommandHttp(store, command) {
+      return await store.dispatch("get", {
+        path: "command",
+        params: { commandText: command, PAGEID: "" },
+      });
+    },
+    async get(store, { path, params }) {
+      const response = await callFetch(store, path, "GET", params);
+      store.commit("setResponseData", response.body);
+      return response.body;
+    },
+    async post(store, { path, params, body, contentType }) {
+      const response = await callFetch(
+        store,
+        path,
+        "POST",
+        params,
+        body,
+        contentType
       );
+      store.commit("setResponseData", response.body);
+      return response.body;
+    },
+    async delete(store, { path, params }) {
+      const response = await callFetch(store, path, "DELETE", params);
       store.commit("setResponseData", response.body);
       return response.body;
     },
   },
 });
 
-export default store;
+async function callFetch(
+  store: ActionContext<AppState, AppState>,
+  path: string,
+  method: "GET" | "POST" | "DELETE",
+  params?: any,
+  body?: any,
+  contentType?: "application/json" | "text/plain"
+): Promise<Response> {
+  const host =
+    store.state.settings.hosts[store.state.settings.defaultHostIndex];
+  const url = `http://${host}/${path}${
+    params ? new URLSearchParams(params).toString() : ""
+  }`;
+  const options: RequestInit = {
+    method,
+    body,
+  };
+  if (contentType) {
+    options.headers = { "Content-type": contentType };
+  }
+  return fetch(url, options);
+}
+
+export default store
