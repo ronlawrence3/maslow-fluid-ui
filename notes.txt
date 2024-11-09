@@ -1,0 +1,12 @@
+$CMD - list of commands
+$A - list of alarm codes
+$E - list of error codes
+$L - grblnames list
+$$ - grblSettings list
+$S - settings list
+$LocalFS/List
+$LocalFS/ListJSON
+$SD/List
+$SD/ListJSON
+$Files/ListGcode=<path>
+

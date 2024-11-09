@@ -10,7 +10,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
     data() {
         return {
             inputValue: ''
@@ -21,8 +23,8 @@ export default {
             const capturedInput = this.inputValue;
             this.$store.commit('updateInputValue', capturedInput);
             this.inputValue = '';
-            this.$store.dispatch('sendCommand', capturedInput);
+            this.$store.dispatch('sendGrblCommand', capturedInput);
         }
     }
-};
+});
 </script>

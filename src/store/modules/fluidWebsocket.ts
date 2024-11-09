@@ -3,7 +3,8 @@
  * Messages can be sent over the websocket, then messages come back in response  be pushed in response, and some messages can be received without having sent anything,
  */
 
-import { ActionTree, createStore, GetterTree, MutationTree } from "vuex";
+import { ActionTree, GetterTree, Module, MutationTree } from "vuex";
+import { AppState } from "../models";
 
 /**
  * The state for a websocket connection. This contains the websocket instance itself and a buffer around what was sent and received, both via "text" and via "binary"
@@ -47,7 +48,7 @@ export const initialState: WebSocketState = {
   commandResponseLines: [],
 };
 
-const getters = <GetterTree<WebSocketState, WebSocketState>>{};
+const getters: GetterTree<WebSocketState, AppState> = {};
 
 const mutations = <MutationTree<WebSocketState>>{
   reset(state) {
@@ -120,7 +121,7 @@ const mutations = <MutationTree<WebSocketState>>{
     });
   },
 };
-const actions = <ActionTree<WebSocketState, WebSocketState>>{
+const actions: ActionTree<WebSocketState, AppState> = {
   async connectToWebsocket(store, host) {
     const ws = new WebSocket(`ws://${host}:81`);
     ws.onmessage = async (event) => {
@@ -151,15 +152,11 @@ const actions = <ActionTree<WebSocketState, WebSocketState>>{
   },
 };
 
-const store = createStore<WebSocketState>({
+export const websocket: Module<WebSocketState, AppState> = {
   state: initialState,
   getters,
   mutations,
   actions,
-  modules: {},
-  plugins: [],
-  strict: true,
-  devtools: true,
-});
+};
 
-export default store;
+export default websocket;

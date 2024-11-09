@@ -1,46 +1,31 @@
 import {
-    BaseDirectory,
-    create,
-    exists,
-    mkdir,
-    readTextFile,
+  BaseDirectory,
+  create,
+  exists,
+  mkdir,
+  readTextFile,
 } from "@tauri-apps/plugin-fs";
 import { fetch } from "@tauri-apps/plugin-http";
-import { ActionContext, createStore } from "vuex";
+import { ActionContext, createLogger, createStore } from "vuex";
+import { AppState } from "./models";
+import { websocket } from './modules/fluidWebsocket';
 
-export interface WebsocketData {
-  textdata: string[];
-  data: string[];
-  ws?: WebSocket;
-}
-export interface AppState {
-  settings: any;
-  websocket: WebsocketData;
-  inputValue: string;
-  responseData?: string;
-}
-const store = createStore<AppState>({
+const debug = process.env.NODE_ENV !== "production";
+
+export default createStore<AppState>({
+  modules: {
+    websocket,
+  },
+  strict: debug,
+  plugins: debug ? [createLogger()] : [],
   state: {
     settings: {},
-    websocket: {
-      textdata: [],
-      data: [],
-    },
     inputValue: "",
     responseData: "",
   },
   mutations: {
     setSettings(state, settings) {
       state.settings = settings;
-    },
-    newBlob(state, addToBuffer) {
-      state.websocket.data.push(...addToBuffer.split("\n"));
-    },
-    newData(state, addToBuffer) {
-      state.websocket.textdata.push(addToBuffer);
-    },
-    setWs(state, ws) {
-      state.websocket.ws = ws;
     },
     setResponseData(state, responseData) {
       state.responseData = responseData;
@@ -91,12 +76,6 @@ const store = createStore<AppState>({
       };
       store.commit("setWs", ws);
       return ws;
-    },
-    async sendImmediateCommand(store, command) {
-      store.state.websocket.ws?.send(command);
-    },
-    async sendCommand(store, command) {
-      store.state.websocket.ws?.send(command + "\n");
     },
     async sendCommandHttp(store, command) {
       return await store.dispatch("get", {
@@ -151,5 +130,3 @@ async function callFetch(
   }
   return fetch(url, options);
 }
-
-export default store
