@@ -1,4 +1,4 @@
-import { Store } from "vuex";
+import { createStore, Store } from "vuex";
 import fluidWebsocket, { CommandInProgress, WebSocketState } from "./fluidWebsocket";
 
 // Define the MockWebSocket class
@@ -21,7 +21,7 @@ describe("fluidWebsocket Vuex Module", () => {
   let store: Store<WebSocketState>;
 
   beforeEach(() => {
-    store = fluidWebsocket;
+    store = createStore(fluidWebsocket as any);
     store.commit ('reset');
   });
 

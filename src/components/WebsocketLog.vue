@@ -16,13 +16,13 @@ export default defineComponent({
         const text = computed(() => {
             console.log('computed', store);
             return store.state.websocket.commandHistory
-              .map(
-                (commandHistory:CommandResult) =>
-                  commandHistory.response
-                    .map((tl:TimeSequencedLine)=> tl.line).join('\n')).join('\n');
+                .map(
+                    (commandHistory: CommandResult) =>
+                        commandHistory.response
+                            .map((tl: TimeSequencedLine) => tl.line).join('\n')).join('\n');
         })
         return {
-          text
+            text
         }
     },
     watch: {
@@ -32,7 +32,7 @@ export default defineComponent({
                 console.log('text changed', textarea?.scrollHeight);
                 if (textarea) {
                     textarea.scrollTo(0, textarea.scrollHeight + 50);
-             }
+                }
             }, 50);
         }
     },

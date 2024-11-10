@@ -21,7 +21,6 @@ export default defineComponent({
     methods: {
         handleEnterKey() {
             const capturedInput = this.inputValue;
-            this.$store.commit('updateInputValue', capturedInput);
             this.inputValue = '';
             this.$store.dispatch('sendGrblCommand', capturedInput);
         }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 
 import DebugStore from "./components/DebugStore.vue";
 import WebsocketLog from "./components/WebsocketLog.vue";
@@ -10,9 +10,9 @@ import GcodeDisplay from "./components/GcodeDisplay.vue";
 const store = useStore();
 
 onMounted(async () => {
-  console.log('onMounted')
-  await store.dispatch('loadSettings');
-  await store.dispatch('connectWebSocket');
+  console.log("onMounted");
+  await store.dispatch("loadSettings");
+  await store.dispatch("connectToWebsocket");
 });
 </script>
 
@@ -27,7 +27,7 @@ onMounted(async () => {
         <v-col cols="6">
           <v-row>
             <v-col cols="12">
-              <send-command ></send-command>
+              <send-command></send-command>
             </v-col>
             <v-col cols="12">
               <websocket-log></websocket-log>
@@ -37,8 +37,14 @@ onMounted(async () => {
       </v-row>
       <v-row>
         <v-col cols="12">
-          Debugging, proving out comms:
-          <debug-store></debug-store>
+          <v-expansion-panels>
+            <v-expansion-panel title="Debugging...">
+              <v-expansion-panel-text>
+                Debugging, proving out comms:
+                <debug-store></debug-store>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-col>
       </v-row>
     </v-container>
@@ -53,12 +59,15 @@ onMounted(async () => {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #249b73);
 }
+
 .send-command {
   width: 100%;
 }
+
 .gcode-display {
-  height: 100%
+  height: 100%;
 }
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
