@@ -14,7 +14,6 @@ export default defineComponent({
         const store = useStore();
 
         const text = computed(() => {
-            console.log('computed', store);
             return store.state.websocket.commandHistory
                 .map(
                     (commandHistory: CommandResult) =>

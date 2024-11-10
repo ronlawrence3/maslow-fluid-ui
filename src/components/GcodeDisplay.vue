@@ -10,7 +10,8 @@ import { ref } from 'vue'
 export default {
     setup() {
         const canvas = ref(null);
-        console.log(canvas);
+        canvas;
+        // console.log(canvas);
     },
 
     mounted() {

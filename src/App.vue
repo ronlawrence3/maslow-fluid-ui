@@ -1,55 +1,53 @@
-<script setup lang="ts">
-import { onMounted } from "vue";
-import { useStore } from "vuex";
+<template>
+  <v-app class="container">
+    <v-app-bar app>
+      <v-toolbar-title>Maslow CNC</v-toolbar-title>
+      <v-tabs v-model="activeTab">
+        <v-tab>Maslow</v-tab>
+        <v-tab>Calibration</v-tab>
+        <v-tab>Settings</v-tab>
+      </v-tabs>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+    <v-main>
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <v-card-text>
+              <v-tabs-window v-model="activeTab">
+                <v-tabs-window-item :value="0">
+                  <Maslow />
+                </v-tabs-window-item>
+                <v-tabs-window-item :value="1">
+                  <p>This will be calibration</p>
+                </v-tabs-window-item>
+                <v-tabs-window-item :value="1">
+                  <p>This will be setup</p>
+                </v-tabs-window-item>
+              </v-tabs-window>
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
 
-import DebugStore from "./components/DebugStore.vue";
-import WebsocketLog from "./components/WebsocketLog.vue";
-import SendCommand from "./components/SendCommand.vue";
-import GcodeDisplay from "./components/GcodeDisplay.vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
+import Maslow from "./components/Maslow.vue";
 
 const store = useStore();
 
+const activeTab = ref(0);
+
 onMounted(async () => {
-  console.log("onMounted");
   await store.dispatch("loadSettings");
   await store.dispatch("connectToWebsocket");
 });
-</script>
 
-<template>
-  <v-app class="container">
-    <h1>Maslow CNC</h1>
-    <v-container fluid>
-      <v-row>
-        <v-col cols="6">
-          <gcode-display></gcode-display>
-        </v-col>
-        <v-col cols="6">
-          <v-row>
-            <v-col cols="12">
-              <send-command></send-command>
-            </v-col>
-            <v-col cols="12">
-              <websocket-log></websocket-log>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-expansion-panels>
-            <v-expansion-panel title="Debugging...">
-              <v-expansion-panel-text>
-                Debugging, proving out comms:
-                <debug-store></debug-store>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
-</template>
+</script>
 
 <style>
 .logo.vite:hover {
