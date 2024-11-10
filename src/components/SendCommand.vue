@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <v-row justify="center">
-            <v-col cols="12" sm="8" md="6">
+        <v-row>
+            <v-col cols="12">
                 <v-text-field v-model="inputValue" label="Enter gcode here" outlined clearable
                     @keyup.enter="handleEnterKey"></v-text-field>
             </v-col>
@@ -10,7 +10,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
     data() {
         return {
             inputValue: ''
@@ -19,10 +21,9 @@ export default {
     methods: {
         handleEnterKey() {
             const capturedInput = this.inputValue;
-            this.$store.commit('updateInputValue', capturedInput);
             this.inputValue = '';
-            this.$store.dispatch('fetchData', { path: 'command', params: { commandText: capturedInput, PAGEID: '' } });
+            this.$store.dispatch('sendGrblCommand', capturedInput);
         }
     }
-};
+});
 </script>
