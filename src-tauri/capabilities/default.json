@@ -12,6 +12,7 @@
     "fs:allow-appdata-meta-recursive",
     "fs:allow-appconfig-write-recursive",
     "fs:allow-appdata-meta",
+    "fs:allow-exists",
     {
       "identifier": "http:default",
       "allow": [

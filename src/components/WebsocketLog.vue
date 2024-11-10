@@ -5,29 +5,41 @@
 </template>
 
 <script lang="ts">
-import { computed, watch } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from 'vuex';
+import { CommandResult, TimeSequencedLine } from '../store/modules/fluidWebsocket';
 
-export default {
+export default defineComponent({
     setup() {
         const store = useStore();
-        const text = computed(() => store.state.websocket.data.join('\n'));
 
-        // autoscroll
-        watch(text, () => {
+        const text = computed(() => {
+            console.log('computed', store);
+            return store.state.websocket.commandHistory
+                .map(
+                    (commandHistory: CommandResult) =>
+                        commandHistory.response
+                            .map((tl: TimeSequencedLine) => tl.line).join('\n')).join('\n');
+        })
+        return {
+            text
+        }
+    },
+    watch: {
+        text: () => {
             setTimeout(() => {
                 const textarea = document.querySelector('.scrolling-textarea textarea');
                 console.log('text changed', textarea?.scrollHeight);
                 if (textarea) {
                     textarea.scrollTo(0, textarea.scrollHeight + 50);
                 }
-
-            }, 50)
-        });
-
-        return { text };
+            }, 50);
+        }
     },
-};
+    methods: {
+    },
+});
+
 </script>
 
 <style scoped>
