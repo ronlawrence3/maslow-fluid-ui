@@ -51,11 +51,15 @@ export const initialState: WebSocketState = {
 const getters: GetterTree<WebSocketState, AppState> = {};
 
 const mutations = <MutationTree<WebSocketState>>{
-  reset(state) {
+  resetWs(state) {
+    state.commandHistory = [];
+    state.pushLines = [];
+    state.textLines = [];
+    state.commandResponseLines = [];
     delete state.commandInProgress;
     delete state.remainder;
     delete state.ws;
-    Object.assign(state, initialState);
+    console.log('resetting WS state')
   },
   setWs(state, ws) {
     state.ws = ws;
@@ -65,7 +69,7 @@ const mutations = <MutationTree<WebSocketState>>{
     const lines: TimeSequencedLine[] = blobContent.split('\n').map((lineRaw) => {
       let line = lineRaw.trim();
       if (state.remainder) {
-        line = state.remainder + line;
+        line = state.remainder.line + line;
         state.remainder = undefined;
       }
       const tsline = { timestamp, line };
@@ -77,7 +81,7 @@ const mutations = <MutationTree<WebSocketState>>{
         let errorCode = line.startsWith('error') ? parseInt(line.split(':')[1]) : 0;
         const cmdResult: CommandResult = {
           command: state.commandInProgress || { timestamp: 0, line: '' },
-          response: state.commandResponseLines,
+          response: [...state.commandResponseLines, tsline],
           result: line == 'ok' ? 'ok' : 'error',
           errorCode,
         };
@@ -94,6 +98,7 @@ const mutations = <MutationTree<WebSocketState>>{
       const lastLine = lines.pop();
       if (lastLine) {
         state.remainder = lastLine;
+        state.commandResponseLines.pop();
       }
     }
   },

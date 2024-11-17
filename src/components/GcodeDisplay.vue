@@ -1,25 +1,28 @@
 <template>
-    <v-card class="gcode-display" :style="{ minWidth: '100px', minHeight: '100px' }">
-        <canvas ref="canvas"></canvas>
-    </v-card>
+    <Card :style="{ width: '100%', height: '100%' }">
+        <template #title>GCode</template>
+        <template #content>
+            <canvas class="gcode-display" id="gcode-canvas" style="width: 100%; height:calc(100% - 60px)"></canvas>
+        </template>
+    </Card>
 </template>
 
-<script lang="ts">
-import { ref } from 'vue'
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import Card from 'primevue/card'
 
-export default {
-    setup() {
-        const canvas = ref(null);
-        canvas;
-        // console.log(canvas);
-    },
+let canvasContext: CanvasRenderingContext2D;
 
-    mounted() {
-        // Use Vuex store to bind the "canvas" variable
-        //  Example: this.canvas = this.$store.state.canvas;
-        // You can also use computed properties to bind the variable
+onMounted(() => {
+    console.log('HERE');
+    const canvas = document.querySelector<HTMLCanvasElement>('#gcode-canvas');
+    canvasContext = canvas?.getContext('2d') as any;
+    if (canvasContext) {
+        canvasContext.fillStyle = "#ffaaff"
+        canvasContext.fillRect(0, 0, 100, 100);
+
     }
-}
+});
 </script>
 
 <style scoped>
@@ -29,5 +32,7 @@ export default {
     align-items: center;
     border: 1px solid gray;
     border-radius: 5px;
+    width: 100%;
+    height: 100%;
 }
 </style>

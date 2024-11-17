@@ -1,50 +1,42 @@
 <template>
-    <v-app class="container">
-        <v-container fluid>
-            <v-row>
-                <v-col cols="6">
-                    <gcode-display></gcode-display>
-                </v-col>
-                <v-col cols="6">
-                    <v-row>
-                        <v-col cols="12">
-                            <send-command></send-command>
-                        </v-col>
-                        <v-col cols="12">
-                            <websocket-log></websocket-log>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col cols="12">
-                    <v-expansion-panels>
-                        <v-expansion-panel title="Debugging...">
-                            <v-expansion-panel-text>
-                                Debugging, proving out comms:
-                                <debug-store></debug-store>
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-app>
+    <div style="height: 100%; width: 100%; display: flex; flex-direction: column;">
+        <div style="flex: 1; display: flex;">
+            <div style="flex: 1;">
+                <gcode-display></gcode-display>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div style="flex: 1;">
+                    <send-command></send-command>
+                </div>
+                <div style="flex: 1;">
+                    <websocket-log></websocket-log>
+                </div>
+            </div>
+        </div>
+        <!-- <div style="flex: 1;">
+            <Accordion>
+                <AccordionPanel>
+                    <AccordionHeader>
+                        Debugging, proving out comms:
+                    </AccordionHeader>
+                    <AccordionContent>
+                        <debug-store></debug-store>
+                    </AccordionContent>
+                </AccordionPanel>
+            </Accordion>
+        </div> -->
+    </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import GcodeDisplay from './GcodeDisplay.vue';
 import SendCommand from './SendCommand.vue';
 import WebsocketLog from './WebsocketLog.vue';
 import DebugStore from './DebugStore.vue';
-import { defineComponent } from 'vue';
+import Button from 'primevue/button'
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
 
-export default defineComponent({
-    components: {
-        GcodeDisplay,
-        SendCommand,
-        WebsocketLog,
-        DebugStore
-    }
-});
 </script>
