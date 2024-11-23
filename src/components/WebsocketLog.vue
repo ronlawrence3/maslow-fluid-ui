@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { CommandResult, TimeSequencedLine } from '../store/modules/fluidWebsocket';
 import Textarea from 'primevue/textarea';

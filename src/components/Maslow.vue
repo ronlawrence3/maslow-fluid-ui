@@ -2,14 +2,14 @@
     <div style="height: 100%; width: 100%; display: flex; flex-direction: column;">
         <div style="flex: 1; display: flex;">
             <div style="flex: 1;">
-                <gcode-display></gcode-display>
+                <GcodeDisplay></GcodeDisplay>
             </div>
             <div style="flex: 1; display: flex; flex-direction: column;">
                 <div style="flex: 1;">
-                    <send-command></send-command>
+                    <SendCommand></SendCommand>
                 </div>
                 <div style="flex: 1;">
-                    <websocket-log></websocket-log>
+                    <WebsocketLog></WebsocketLog>
                 </div>
             </div>
         </div>
@@ -32,11 +32,11 @@
 import GcodeDisplay from './GcodeDisplay.vue';
 import SendCommand from './SendCommand.vue';
 import WebsocketLog from './WebsocketLog.vue';
-import DebugStore from './DebugStore.vue';
-import Button from 'primevue/button'
-import Accordion from 'primevue/accordion';
-import AccordionPanel from 'primevue/accordionpanel';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
+// import DebugStore from './DebugStore.vue';
+// import Button from 'primevue/button'
+// import Accordion from 'primevue/accordion';
+// import AccordionPanel from 'primevue/accordionpanel';
+// import AccordionHeader from 'primevue/accordionheader';
+// import AccordionContent from 'primevue/accordioncontent';
 
 </script>
