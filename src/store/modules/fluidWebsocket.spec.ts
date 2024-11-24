@@ -109,6 +109,7 @@ describe('fluidWebsocket Vuex Module', () => {
       'lines that have more',
       'lines that have multiline',
       'of',
+      'ok',
     ]);
   });
 });
