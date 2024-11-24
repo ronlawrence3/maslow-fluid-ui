@@ -1,45 +1,35 @@
 <template>
     <div class="scrolling-textarea">
-        <v-textarea v-model="text" :rows="20" />
+        <Textarea v-model="text" rows="20" />
     </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { CommandResult, TimeSequencedLine } from '../store/modules/fluidWebsocket';
+import Textarea from 'primevue/textarea';
 
-export default defineComponent({
-    setup() {
-        const store = useStore();
 
-        const text = computed(() => {
-            console.log('computed', store);
-            return store.state.websocket.commandHistory
-                .map(
-                    (commandHistory: CommandResult) =>
-                        commandHistory.response
-                            .map((tl: TimeSequencedLine) => tl.line).join('\n')).join('\n');
-        })
-        return {
-            text
-        }
-    },
-    watch: {
-        text: () => {
-            setTimeout(() => {
-                const textarea = document.querySelector('.scrolling-textarea textarea');
-                console.log('text changed', textarea?.scrollHeight);
-                if (textarea) {
-                    textarea.scrollTo(0, textarea.scrollHeight + 50);
-                }
-            }, 50);
-        }
-    },
-    methods: {
-    },
+const store = useStore();
+
+const text = computed(() => {
+    return store.state.websocket.commandHistory
+        .map(
+            (commandHistory: CommandResult) =>
+                commandHistory.command.line + '\n' + commandHistory.response
+                    .map((tl: TimeSequencedLine) => tl.line).join('\n')).join('\n');
 });
 
+watch(text, () => {
+    setTimeout(() => {
+        const textarea = document.querySelector('.scrolling-textarea textarea');
+        console.log('text changed', textarea?.scrollHeight);
+        if (textarea) {
+            textarea.scrollTo(0, textarea.scrollHeight + 50);
+        }
+    }, 50);
+})
 </script>
 
 <style scoped>
@@ -47,8 +37,8 @@ export default defineComponent({
     padding: 0.5rem;
     border: none;
     resize: vertical;
-    width: 600px;
-    background-color: darkslategray;
+    width: 100%;
+    background-color: lightcyan;
 }
 
 .scrolling-textarea textarea::-webkit-scrollbar {
