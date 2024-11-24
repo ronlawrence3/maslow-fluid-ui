@@ -14,13 +14,14 @@ To install the application, see the releases page for pre-built binaries for Win
 
 ## Development
 
-To develop the application, you will need to have Node.js and npm installed. We recommend nodenv, which allows you to manage multiple versions of Node.js on your system.
+To develop the application, you will need to have bun installed on your system. Bun is a node alternative that allows you to build and run the application.
+You can install bun by visiting the [bun website](https://bun.sh/docs/installation) and following the instructions for your platform. You will also need to ensure your system meets the requirements for building Tauri applications. See the [Tauri documentation](https://v2.tauri.app/start/prerequisites/) for more information.
 
-Once you have a nodejs installed, you can then clone the repository and run the following commands:
+Once you have bun and the tauri prerequsites installed, you can run the following commands to start the development server:
 
 ```bash
-npm install
-npm run tauri dev
+bun install
+bun run tauri dev
 ```
 
 This will start the development server and open the application. You can then make changes to the code and see them reflected in real-time.
@@ -30,10 +31,10 @@ This will start the development server and open the application. You can then ma
 To build the application, you can run the following command:
 
 ```bash
-npm run tauri build
+bun tauri build
 ```
 
-This will create a distributable package for your platform in the `dist` directory.
+This will create a distributable package for your platform. It takes a long time to build the application, at least the first time, so be patient.
 
 ## Contributing
 
