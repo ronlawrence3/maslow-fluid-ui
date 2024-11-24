@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 // Vuetify
-import Aura from '@primevue/themes/aura';
+import Material from '@primevue/themes/material';
 import PrimeVue from 'primevue/config';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
@@ -20,7 +20,10 @@ createApp(App)
   .use(vuetify)
   .use(PrimeVue, {
     theme: {
-      preset: Aura,
+      preset: Material,
+      options: {
+        darkModeSelector: 'use-dark-mode'
+      }
     },
   })
   .use(store)
