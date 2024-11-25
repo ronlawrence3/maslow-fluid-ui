@@ -6,6 +6,9 @@
             </div>
             <div style="flex: 1; display: flex; flex-direction: column;">
                 <div style="flex: 1;">
+                    <ControlsPanel></ControlsPanel>
+                </div>
+                <div style="flex: 1;">
                     <SendCommand></SendCommand>
                 </div>
                 <div style="flex: 1;">
@@ -32,6 +35,7 @@
 import GcodeDisplay from './GcodeDisplay.vue';
 import SendCommand from './SendCommand.vue';
 import WebsocketLog from './WebsocketLog.vue';
+import ControlsPanel from './ControlsPanel.vue';
 // import DebugStore from './DebugStore.vue';
 // import Button from 'primevue/button'
 // import Accordion from 'primevue/accordion';
