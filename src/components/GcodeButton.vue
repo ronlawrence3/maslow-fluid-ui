@@ -1,6 +1,17 @@
 <template>
     <Button @click="doClick">
-        {{ props.label ? props.label : props.command }}
+        <template v-if="props.icon">
+            <i :class="`pi pi-${props.icon}`"></i>
+        </template>
+        <template v-if="!props.icon">
+            <i class="pi pi-dot"></i>
+        </template>
+        <template v-if="props.label">
+            {{ props.label ? props.label : props.command }}
+        </template>
+        <template v-if="!props.label">
+            <slot></slot>
+        </template>
     </Button>
 </template>
 
@@ -16,6 +27,10 @@ const props = defineProps({
     command: {
         type: String,
         required: true
+    },
+    icon: {
+        type: String,
+        default: ''
     },
     label: {
         type: String,

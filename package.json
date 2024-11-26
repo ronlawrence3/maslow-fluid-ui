@@ -20,6 +20,7 @@
     "@tauri-apps/plugin-shell": "^2",
     "@types/jest": "^29.5.14",
     "axios": "^1.7.7",
+    "primeicons": "^7.0.0",
     "primevue": "^4.2.1",
     "ts-node": "^10.9.2",
     "vue": "^3.3.4",

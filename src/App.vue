@@ -14,7 +14,7 @@
           <Maslow />
         </TabPanel>
         <TabPanel value="1">
-          <p>This will be calibration</p>
+          <CalibrationPanel></CalibrationPanel>
         </TabPanel>
         <TabPanel value="2">
           <p>This will be setup</p>
@@ -27,7 +27,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useStore } from "vuex";
-import Maslow from "./components/Maslow.vue";
+import CalibrationPanel from "./views/CalibrationPanel.vue";
+import Maslow from "./views/Maslow.vue";
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
